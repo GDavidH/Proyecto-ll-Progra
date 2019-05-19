@@ -37,22 +37,32 @@ public class LandFrame extends JFrame {
             y+= 75;
         }
         
-
+        Figure mys;
         //iterate over all squares
-        for (Figure mySquare : myFigureList) {
-            myFigure = mySquare;
-            if (myFigure.getIdentification().equalsIgnoreCase("Square")) {
-                g.setColor(Color.YELLOW);
+       for (Figure mySquare : myFigureList) {
+            mys = mySquare;
+            if (mys.getIdentification().equalsIgnoreCase("Square")) {
+                g.setColor(Color.cyan);
                 g.fillRect(mySquare.getPointPosition().getX(), mySquare.getPointPosition().getY(),
                         mySquare.getLength(), mySquare.getWidth());
             }
 
-            if (myFigure.getIdentification().equalsIgnoreCase("Oval")) {
-                g.setColor(Color.pink);
+            if (mys.getIdentification().equalsIgnoreCase("Oval")) {
+                g.setColor(Color.BLUE);
                 g.fillOval(mySquare.getPointPosition().getX(), mySquare.getPointPosition().getY(),
                         mySquare.getLength(), mySquare.getWidth());
             }
-
+            if (mys.getIdentification().equalsIgnoreCase("Arc")) {
+                g.setColor(Color.yellow);
+                g.fillArc(mySquare.getPointPosition().getX(), mySquare.getPointPosition().getY(),
+                        mySquare.getLength(), mySquare.getWidth(),50,300);
+                
+            }
+            if (mys.getIdentification().equalsIgnoreCase("Round")) {
+                g.setColor(Color.red);
+                g.fillRoundRect(mySquare.getPointPosition().getX(), mySquare.getPointPosition().getY(),
+                        50, mySquare.getWidth(),40,20);
+            }
         } //end for
     }
 

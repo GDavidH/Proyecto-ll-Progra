@@ -22,34 +22,46 @@ import visual.LandFrame;
  */
 public class Test {
 
+    
     private static final int speedFaster = 50;
     private static final int speedFast = 150;
     private static final int speedMedium = 300;
     private static final int speedSlow = 500;
 
-    public void test1() throws IOException, JDOMException {
-        XMLStudentManager manager = new XMLStudentManager("./data/Square.xml");
+
+    void test1() throws IOException, JDOMException {
+        XMLStudentManager manager = new XMLStudentManager("./data/Figures.xml");
         //create the domain squares
-        int y = 125;
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0) {
-                Figure square = new Figure("Square", new Point(100, y), 25, 25);
+        int y = 50;
+        for (int i = 1; i <= 4; i++) {
+            if (i % 4 == 0) {
+                Figure square = new Figure("Square", new Point(50, y), 25, 25);
                 manager.insertSquare(square);
-
+                y += 100;
             }
-            if (i % 2 != 0) {
-                Figure square = new Figure("Oval", new Point(100, y), 25, 25);
+            if (i % 4 == 1) {
+                Figure square = new Figure("Oval", new Point(50, y), 25, 25);
                 manager.insertSquare(square);
-
+                y += 100;
             }
-            y += 75;
+            if (i % 4 == 2) {
+                Figure square = new Figure("Arc", new Point(50, y), 25, 25);
+                manager.insertSquare(square);
+                y += 100;
+            }
+            if (i % 4 == 3) {
+                Figure square = new Figure("Round", new Point(50, y), 25, 25);
+                manager.insertSquare(square);
+                y += 100;
+            }
         }
 
         //create the array list for the frame to paint
         ArrayList<Figure> squareList = new ArrayList();
         Figure[] squares = manager.getAllSquares();
-        for (Figure square : squares) {
-            squareList.add(square);
+        for (int i = 0; i < squares.length; i++) {
+            squareList.add(squares[i]);
+
         }
 
         //create the new frame and send the square list
@@ -61,17 +73,30 @@ public class Test {
         repaintThread.start();
 
         //thread for controlling the movement of the squares
-        int y1 = 125;
-        int speed = 0;
+        int p1 = 50;
+        Figure mys;
         for (Figure square : squares) {
-            if(square.getIdentification().equalsIgnoreCase("Oval")){
-                speed = speedFaster;
-            }else if(square.getIdentification().equalsIgnoreCase("Square"))
-                speed = speedFast;
-            SquareThread squareThread = new SquareThread(square, speed, y1);
-            
-            y1 += 75;
-            squareThread.start();
+            mys = square;
+            if (mys.getIdentification().equalsIgnoreCase("Square")) {
+                SquareThread squareThread = new SquareThread(mys, speedFast, p1);
+                p1 += 50;
+                squareThread.start();
+            }
+            if (mys.getIdentification().equalsIgnoreCase("Oval")) {
+                SquareThread squareThread = new SquareThread(mys, speedFaster, p1);
+                p1 += 50;
+                squareThread.start();
+            }
+            if (mys.getIdentification().equalsIgnoreCase("Arc")) {
+                SquareThread squareThread = new SquareThread(mys, speedMedium, p1);
+                p1 += 50;
+                squareThread.start();
+            }
+            if (mys.getIdentification().equalsIgnoreCase("Round")) {
+                SquareThread squareThread = new SquareThread(mys, speedSlow, p1);
+                p1 += 50;
+                squareThread.start();
+            }
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import org.jdom.JDOMException;
 import threads.RepaintLandThread;
-import threads.SquareThread;
+import threads.FigureThread;
 import visual.LandFrame;
 
 /**
@@ -35,22 +35,22 @@ public class Test {
         int y = 50;
         for (int i = 1; i <= 4; i++) {
             if (i % 4 == 0) {
-                Figure square = new Figure("Square", new Point(50, y), 25, 25);
+                Figure square = new Figure("Square", new Point(10, y), 25, 25);
                 manager.insertSquare(square);
                 y += 100;
             }
             if (i % 4 == 1) {
-                Figure square = new Figure("Oval", new Point(50, y), 25, 25);
+                Figure square = new Figure("Oval", new Point(10, y), 25, 25);
                 manager.insertSquare(square);
                 y += 100;
             }
             if (i % 4 == 2) {
-                Figure square = new Figure("Arc", new Point(50, y), 25, 25);
+                Figure square = new Figure("Arc", new Point(10, y), 25, 25);
                 manager.insertSquare(square);
                 y += 100;
             }
             if (i % 4 == 3) {
-                Figure square = new Figure("Round", new Point(50, y), 25, 25);
+                Figure square = new Figure("Round", new Point(10, y), 25, 25);
                 manager.insertSquare(square);
                 y += 100;
             }
@@ -78,22 +78,22 @@ public class Test {
         for (Figure square : squares) {
             mys = square;
             if (mys.getIdentification().equalsIgnoreCase("Square")) {
-                SquareThread squareThread = new SquareThread(mys, speedFast, p1);
+                FigureThread squareThread = new FigureThread(mys, speedFast, p1);
                 p1 += 50;
                 squareThread.start();
             }
             if (mys.getIdentification().equalsIgnoreCase("Oval")) {
-                SquareThread squareThread = new SquareThread(mys, speedFaster, p1);
+                FigureThread squareThread = new FigureThread(mys, speedFaster, p1);
                 p1 += 50;
                 squareThread.start();
             }
             if (mys.getIdentification().equalsIgnoreCase("Arc")) {
-                SquareThread squareThread = new SquareThread(mys, speedMedium, p1);
+                FigureThread squareThread = new FigureThread(mys, speedMedium, p1);
                 p1 += 50;
                 squareThread.start();
             }
             if (mys.getIdentification().equalsIgnoreCase("Round")) {
-                SquareThread squareThread = new SquareThread(mys, speedSlow, p1);
+                FigureThread squareThread = new FigureThread(mys, speedSlow, p1);
                 p1 += 50;
                 squareThread.start();
             }

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package data;
 
 import domain.Point;
@@ -16,11 +13,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-/**
- *
- * @author fabian
- */
-public class XMLStudentManager {
+public class XMLFigureManager {
     
     //variables
     private Document document;
@@ -28,12 +21,12 @@ public class XMLStudentManager {
     private String path; //camino, ruta
 
     //start constructor
-    public XMLStudentManager(String path) throws IOException, JDOMException {
+    public XMLFigureManager(String path) throws IOException, JDOMException {
         //ruta en la que se encuentra el archivo XML
         this.path = path;
         
-        File fileStudent = new File(path);//esto es solo para hacer validación
-        if(fileStudent.exists()){
+        File fileFigure = new File(path);//esto es solo para hacer validación
+        if(fileFigure.exists()){
             //1. EL ARCHIVO YA EXISTE, ENTONCES LO CARGO EN MEMORIA
             
             //toma la estructura de datos y las carga en memoria
@@ -45,10 +38,9 @@ public class XMLStudentManager {
             this.root = this.document.getRootElement();
         }
         else{
-            //2. EL ARCHIVO NO EXISTE, ENTONCES LO CREO Y LUEGO LO CARGO EN MEMORIA
-            
+            //2. EL ARCHIVO NO EXISTE, ENTONCES LO CREO y LUEGO LO CARGO EN MEMORIA   
             //CREAMOS EL ELEMENTO RAIZ
-            this.root = new Element("squares");
+            this.root = new Element("figure");
             
             //CREAMOS EL DOCUMENTO
             this.document = new Document(this.root);
@@ -65,25 +57,25 @@ public class XMLStudentManager {
     }
     
     //metodo para insertar un nuevo estudiante en el documento xml
-    public void insertSquare(Figure square) throws IOException{
+    public void insertFigure(Figure square) throws IOException{
         //INSERTAMOS EN EL DOCUMENTO EN MEMORIA
         //para insertar en xml, primero se crean los elementos
         
         //crear el estudiante
-        Element eSquare = new Element("square");
+        Element eFigure = new Element("figure");
         //agregamos atributo
-        eSquare.setAttribute("identification", square.getIdentification());
+        eFigure.setAttribute("identification", square.getIdentification());
         
         //crear el elemento nombre
         Element ePointPosition = new Element("pointposition");
-        Element X = new Element("x");
-        X.addContent(String.valueOf(square.getPointPosition().getX()));
+        Element x = new Element("x");
+        x.addContent(String.valueOf(square.getPointPosition().getX()));
         
-        Element Y = new Element("y");
-        Y.addContent(String.valueOf(square.getPointPosition().getY()));
+        Element y = new Element("y");
+        y.addContent(String.valueOf(square.getPointPosition().getY()));
         
-        ePointPosition.addContent(X);
-        ePointPosition.addContent(Y);
+        ePointPosition.addContent(x);
+        ePointPosition.addContent(y);
         
         //creamos el elemento nota
         Element eSizeX = new Element("sizex");
@@ -93,13 +85,12 @@ public class XMLStudentManager {
         eSizeY.addContent(String.valueOf(square.getLength()));
         
         //agregar al elemento student el contenido de nombre y nota
-//        eSquare.addContent(ePointPosition);
-        eSquare.addContent(eSizeX);
-        eSquare.addContent(eSizeY);
-        eSquare.addContent(ePointPosition);
+        eFigure.addContent(eSizeX);
+        eFigure.addContent(eSizeY);
+        eFigure.addContent(ePointPosition);
         
         //AGREGAMOS AL ROOT
-        this.root.addContent(eSquare);
+        this.root.addContent(eFigure);
         
         //FINALMENTE: GUARDAR EN DD
         storeXML();
@@ -107,24 +98,24 @@ public class XMLStudentManager {
     
     
     //delete
-    public void deleteSquare() throws IOException{
+    public void deleteFigure() throws IOException{
         List elementList = this.root.getChildren();
         elementList.remove(1); //Esta removiento el estudiante en la posición que se le esta dando
         
-        //FINALMENTE: GUARDAR EN DD
+        //FINALMENTE: GUARDAR EN Disco Duro
         storeXML();
     }
     
     //metodo para obtener todos los estudiantes en un arreglo
-    public Figure[] getAllSquares(){
+    public Figure[] getAllFigures(){
         //obtenemos la cantidad de estudiantes
-        int studentsQuantity = this.root.getContentSize();
+        int FiguresQuantity = this.root.getContentSize();
         
         //obtenemos una lista con todos los elementos de root
         List elementList = this.root.getChildren();
         
         //definimos el tamanno del arreglo
-        Figure[] squaresArray = new Figure[studentsQuantity];
+        Figure[] FiguresArray = new Figure[FiguresQuantity];
         
         //recorremos la lista para ir creando los objetos de tipo estudiante
         int count = 0;
@@ -133,27 +124,27 @@ public class XMLStudentManager {
             Element currentElement = (Element)currentObject;
             
             //crear el objeto Square
-            Figure square = new Figure();
+            Figure figure = new Figure();
             
             //establezco el id
-            square.setIdentification(currentElement.getAttributeValue("identification"));
+            figure.setIdentification(currentElement.getAttributeValue("identification"));
             
             int sqPointX = Integer.parseInt(currentElement.getChild("pointposition").getChild("x").getValue());
             int sqPointY = Integer.parseInt(currentElement.getChild("pointposition").getChild("y").getValue());
             Point sqPoint = new Point(sqPointX, sqPointY);
             //establezco el nombre
-            square.setPointPosition(sqPoint);
+            figure.setPointPosition(sqPoint);
             
             //establezco la nota
-            square.setWidth(Integer.parseInt(currentElement.getChild("sizex").getValue()));
+            figure.setWidth(Integer.parseInt(currentElement.getChild("sizex").getValue()));
             
             //establezco la nota
-            square.setLength(Integer.parseInt(currentElement.getChild("sizey").getValue()));
+            figure.setLength(Integer.parseInt(currentElement.getChild("sizey").getValue()));
             
             //guardar en el arreglo
-            squaresArray[count++] = square;
+            FiguresArray[count++] = figure;
         }//end for
-        return squaresArray;
+        return FiguresArray;
     }
     
 }

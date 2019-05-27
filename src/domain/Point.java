@@ -1,7 +1,7 @@
-
 package domain;
 
 public class Point {
+
     private int x;
     private int y;
 
@@ -14,8 +14,6 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-    
-    
 
     /**
      * @return the x

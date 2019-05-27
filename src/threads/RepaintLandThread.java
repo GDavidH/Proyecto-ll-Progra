@@ -2,8 +2,6 @@
 
 package threads;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import visual.LandFrame;
 
 public class RepaintLandThread extends Thread{
@@ -24,7 +22,7 @@ public class RepaintLandThread extends Thread{
             try {
                 //sleep until next repaint
                 this.sleep(paintTime);
-                landFrame.paintAgain();
+                landFrame.repaint();
                 
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
@@ -32,4 +30,5 @@ public class RepaintLandThread extends Thread{
             
         }//end while
     }//end run
+    
 }

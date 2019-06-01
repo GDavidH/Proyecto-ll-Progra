@@ -15,7 +15,7 @@ import org.jdom.output.XMLOutputter;
 
 public class XMLFigureManager {
     
-    //variables
+    //declaración de variables
     private Document document;
     private Element root; //raíz
     private String path; //camino, ruta
@@ -46,7 +46,7 @@ public class XMLFigureManager {
             this.document = new Document(this.root);
             
             //GUARDAMOS EN DISCO DURO
-            storeXML();     //almacenar
+            storeXML(); //almacenar
         }
     }//end constructor
     
@@ -57,32 +57,32 @@ public class XMLFigureManager {
     }
     
     //metodo para insertar un nuevo estudiante en el documento xml
-    public void insertFigure(Figure square) throws IOException{
+    public void insertFigure(Figure figure) throws IOException{
         //INSERTAMOS EN EL DOCUMENTO EN MEMORIA
         //para insertar en xml, primero se crean los elementos
         
         //crear el estudiante
         Element eFigure = new Element("figure");
         //agregamos atributo
-        eFigure.setAttribute("identification", square.getIdentification());
+        eFigure.setAttribute("identification", figure.getIdentification());
         
         //crear el elemento nombre
         Element ePointPosition = new Element("pointposition");
         Element x = new Element("x");
-        x.addContent(String.valueOf(square.getPointPosition().getX()));
+        x.addContent(String.valueOf(figure.getPointPosition().getX()));
         
         Element y = new Element("y");
-        y.addContent(String.valueOf(square.getPointPosition().getY()));
+        y.addContent(String.valueOf(figure.getPointPosition().getY()));
         
         ePointPosition.addContent(x);
         ePointPosition.addContent(y);
         
         //creamos el elemento nota
         Element eSizeX = new Element("sizex");
-        eSizeX.addContent(String.valueOf(square.getWidth()));
+        eSizeX.addContent(String.valueOf(figure.getWidth()));
         
         Element eSizeY = new Element("sizey");
-        eSizeY.addContent(String.valueOf(square.getLength()));
+        eSizeY.addContent(String.valueOf(figure.getLength()));
         
         //agregar al elemento student el contenido de nombre y nota
         eFigure.addContent(eSizeX);
@@ -97,7 +97,7 @@ public class XMLFigureManager {
     }//end insert
     
     
-    //delete
+    //delete fields
     public void deleteFigure() throws IOException{
         List elementList = this.root.getChildren();
         elementList.remove(1); //Esta removiento el estudiante en la posición que se le esta dando
@@ -106,7 +106,7 @@ public class XMLFigureManager {
         storeXML();
     }
     
-    //metodo para obtener todos los estudiantes en un arreglo
+    //metodo para obtener todas las figuras del xml y cargarlas en una list
     public Figure[] getAllFigures(){
         //obtenemos la cantidad de estudiantes
         int FiguresQuantity = this.root.getContentSize();

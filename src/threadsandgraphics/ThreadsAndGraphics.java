@@ -1,23 +1,26 @@
 package threadsandgraphics;
 
-import data.XMLStudentManager;
-import visual.LandFrame;
-import threads.RepaintLandThread;
-import threads.SquareThread;
-import domain.Point;
 import domain.Figure;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import org.jdom.JDOMException;
+import threads.RepaintLandThread;
+import visual.LandFrame;
 
 public class ThreadsAndGraphics {
-
     
+    //Metodo main()
     public static void main(String[] args) throws IOException, JDOMException {
-        Test test =new Test();
-        test.test1();
+
+        ArrayList<Figure> squareList = new ArrayList<>();
+ 
+        //create the new frame and send the square list
+        LandFrame myLand = new LandFrame(squareList);
+        myLand.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //thread for repainting
+        RepaintLandThread repaintThread = new RepaintLandThread(myLand, 50);
+        repaintThread.start();
     }//end main
-    
-    
 }

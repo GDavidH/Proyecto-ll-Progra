@@ -1,21 +1,24 @@
-
 package domain;
 
+// Clase punto
+// Define la posición exacta en pantalla de la figura
 public class Point {
+
+    //Declaración de variables
     private int x;
     private int y;
 
+    //Constructor de la clase
     public Point() {
         this.x = 0;
         this.y = 0;
     }
 
+    //  Sobre carga del Constructor 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    
-    
 
     /**
      * @return the x
